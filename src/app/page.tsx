@@ -1,6 +1,8 @@
 import Image from "next/image";
+import { getFlickrFeed } from "./api/actions/flickr";
 
 export default function Home() {
+  getFlickrFeed();
   return (
     <main className="">
       <div className="md:flex flex-wrap items-center md:items-center bg-slate-700 p-4 rounded-md">
