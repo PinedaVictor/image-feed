@@ -45,6 +45,8 @@ const getUrl = (input: string): string => {
   if (input === "") {
     return "https://www.flickr.com/services/feeds/photos_public.gne";
   } else {
-    return `https://www.flickr.com/services/feeds/photos_public.gne?tags=${input}`;
+    const encodedInput = encodeURIComponent(input);
+    console.log("THE encoding:", encodedInput);
+    return `https://www.flickr.com/services/feeds/photos_public.gne?tags=${encodedInput}`;
   }
 };

@@ -1,20 +1,34 @@
 "use client";
-import { FC, useCallback, useEffect, useState } from "react";
-import { type ParsedEntry } from "@/lib/types";
+import type { FC } from "react";
+import type { ParsedEntry } from "@/lib/types";
+import { useCallback, useEffect, useState } from "react";
 import { getFlickrFeed } from "@/app/api/actions/flickr";
+import { useDataState, type DataState } from "@/store/strore";
 import { ImageGridItem } from "../atoms";
 import { GripWrapper } from "../atoms/GridWrapper";
+import { Loading } from "../atoms/Loading";
 
 export const ImageGrid: FC = () => {
   const [feed, setFeed] = useState<[]>();
-  const [loading, setloading] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const dataState = useDataState((state: DataState) => state);
 
+  // Get initial feed image data
   const getFeedData = useCallback(async () => {
     const data = await getFlickrFeed("");
-    console.log("The data:", data);
     if (data) {
       setFeed(data);
-      setloading(false);
+      setLoading(false);
+    }
+  }, []);
+
+  // Function to search for images based on user input
+  const searchImages = useCallback(async (searchInput: string) => {
+    setLoading(true);
+    const data = await getFlickrFeed(searchInput);
+    if (data) {
+      setFeed(data);
+      setLoading(false);
     }
   }, []);
 
@@ -22,12 +36,19 @@ export const ImageGrid: FC = () => {
     getFeedData();
   }, [getFeedData]);
 
+  useEffect(() => {
+    if (dataState.search.executeSearch && dataState.search.text.length >= 1) {
+      searchImages(dataState.search.text);
+      dataState.search.triggerSearch(false);
+    }
+  }, [searchImages, dataState]);
+
   return (
-    <GripWrapper>
+    <>
       {loading || !feed ? (
-        <>Loading...</>
+        <Loading />
       ) : (
-        <>
+        <GripWrapper>
           {feed.map((image: ParsedEntry, index) => (
             <ImageGridItem
               key={index}
@@ -36,8 +57,8 @@ export const ImageGrid: FC = () => {
               author={image.author}
             />
           ))}
-        </>
+        </GripWrapper>
       )}
-    </GripWrapper>
+    </>
   );
 };
