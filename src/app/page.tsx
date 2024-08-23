@@ -1,16 +1,15 @@
 import Image from "next/image";
 import { getFlickrFeed } from "./api/actions/flickr";
+import { Header } from "@/components/atomic/atoms/Header";
+import { ImageGrid } from "@/components/atomic/molecules/ImageGrid";
 
 export default function Home() {
   getFlickrFeed();
   return (
     <main className="">
       <div className="md:flex flex-wrap items-center md:items-center bg-slate-700 p-4 rounded-md">
-        <div className=" min-w-full">
-          <h2 className="text-2xl font-bold leading-7 text-white sm:truncate sm:text-3xl sm:tracking-tight">
-            Buzz Solutions Coding Challenge
-          </h2>
-        </div>
+        <Header title="Buzz Solutions Coding Challenge" />
+        {/* TODO: Abstract into component */}
         <div className=" w-[100%]">
           <div className="mt-2">
             <label
@@ -37,6 +36,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <ImageGrid />
     </main>
   );
 }

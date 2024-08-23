@@ -1,5 +1,7 @@
 "use server";
+import { NextResponse } from "next/server";
 import { DOMParser } from "xmldom";
+import { type ParsedEntry } from "@/lib/types";
 
 export const getFlickrFeed = async () => {
   try {
@@ -11,18 +13,12 @@ export const getFlickrFeed = async () => {
     const xmlDoc = parser.parseFromString(data, "application/xml");
     const imgEntries = xmlDoc.getElementsByTagName("entry");
     const parsedData = parseEntries(imgEntries);
-    console.log("parsed data:", parsedData);
+    return JSON.parse(JSON.stringify(parsedData));
   } catch (error) {
-    console.error(error);
+    return NextResponse.json({
+      error: `An error occured while retrieving image data: ${error}`,
+    });
   }
-
-  return Response.json({ sup: true });
-};
-
-type ParsedEntry = {
-  title: string;
-  imgUrl: string;
-  author: string;
 };
 
 const parseEntries = (entries: HTMLCollectionOf<Element>) => {
@@ -46,4 +42,4 @@ const parseEntries = (entries: HTMLCollectionOf<Element>) => {
   });
 };
 
-const parseFlickrText = (text: string) => {};
+const searhFlikr = (text: string) => {};
