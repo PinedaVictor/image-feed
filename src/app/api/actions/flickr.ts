@@ -3,7 +3,6 @@ import { DOMParser } from "xmldom";
 
 export const getFlickrFeed = async () => {
   try {
-    console.log("getting photo data");
     const feed = await fetch(
       "https://www.flickr.com/services/feeds/photos_public.gne"
     );
