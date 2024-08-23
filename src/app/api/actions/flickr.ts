@@ -3,11 +3,10 @@ import { NextResponse } from "next/server";
 import { DOMParser } from "xmldom";
 import { type ParsedEntry } from "@/lib/types";
 
-export const getFlickrFeed = async () => {
+export const getFlickrFeed = async (searchInput: string) => {
   try {
-    const feed = await fetch(
-      "https://www.flickr.com/services/feeds/photos_public.gne"
-    );
+    const url = getUrl(searchInput);
+    const feed = await fetch(url);
     const data = await feed.text();
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(data, "application/xml");
@@ -42,4 +41,10 @@ const parseEntries = (entries: HTMLCollectionOf<Element>) => {
   });
 };
 
-const searhFlikr = (text: string) => {};
+const getUrl = (input: string): string => {
+  if (input === "") {
+    return "https://www.flickr.com/services/feeds/photos_public.gne";
+  } else {
+    return `https://www.flickr.com/services/feeds/photos_public.gne?tags=${input}`;
+  }
+};
