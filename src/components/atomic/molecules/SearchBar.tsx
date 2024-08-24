@@ -33,6 +33,7 @@ export const SearchBar: FC = () => {
   return (
     <div className=" w-[100%]">
       <div className="mt-2">
+        {/* TODO: Abstract label and input into FormElement component */}
         <label
           htmlFor="search"
           className="text-sm font-medium leading-6 text-slate-50"

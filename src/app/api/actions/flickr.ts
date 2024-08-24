@@ -5,9 +5,9 @@ import { DOMParser } from "xmldom";
 import { FLICKR_CONFIG } from "./config";
 
 /**
- *
- * @param searchInput search tags
- * @returns Image data from the Flickr API
+ * GET Flickr public images
+ * @param searchInput
+ * @returns Image data from the Flickr API as an array of {title, imgUrl, author}
  */
 export const getFlickrFeed = async (searchInput: string) => {
   try {
@@ -27,7 +27,7 @@ export const getFlickrFeed = async (searchInput: string) => {
 };
 
 /**
- *
+ * Parse entries given from Flickr API
  * @param entries xml entries from flickr api text response
  * @returns parsed image data
  */
@@ -53,16 +53,15 @@ const parseEntries = (entries: HTMLCollectionOf<Element>) => {
 };
 
 /**
- *
+ * Configure Flickr API URL
  * @param input search tags inputs
  * @returns Flickr API URL depending on whether tags are specified or not
  */
-const getUrl = (input: string): string => {
-  if (input === "") {
-    console.log("sending url:,", FLICKR_CONFIG.FLICKR_URL);
+const getUrl = (searchTags: string): string => {
+  if (searchTags === "") {
     return FLICKR_CONFIG.FLICKR_URL;
   } else {
-    const encodedInput = encodeURIComponent(input);
+    const encodedInput = encodeURIComponent(searchTags);
     return `${FLICKR_CONFIG.FLICKR_URL}?tags=${encodedInput}`;
   }
 };
