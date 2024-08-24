@@ -9,7 +9,7 @@ interface SearchText {
   triggerSearch: (executeSearch: boolean) => void;
 }
 
-// Add data that needs to updating at multiple levels of the execution tree
+// Add data that needs to be updated at multiple levels of the execution tree
 export interface DataState {
   search: SearchText;
 }
