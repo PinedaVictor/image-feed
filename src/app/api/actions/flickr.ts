@@ -1,8 +1,14 @@
 "use server";
+import { type ParsedEntry } from "@/lib/types";
 import { NextResponse } from "next/server";
 import { DOMParser } from "xmldom";
-import { type ParsedEntry } from "@/lib/types";
+import { FLICKR_CONFIG } from "./config";
 
+/**
+ *
+ * @param searchInput search tags
+ * @returns Image data from the Flickr API
+ */
 export const getFlickrFeed = async (searchInput: string) => {
   try {
     const url = getUrl(searchInput);
@@ -20,6 +26,11 @@ export const getFlickrFeed = async (searchInput: string) => {
   }
 };
 
+/**
+ *
+ * @param entries xml entries from flickr api text response
+ * @returns parsed image data
+ */
 const parseEntries = (entries: HTMLCollectionOf<Element>) => {
   return Array.from(entries).map((entry: Element): ParsedEntry => {
     const title = entry.getElementsByTagName("title")[0]?.textContent || "";
@@ -41,12 +52,17 @@ const parseEntries = (entries: HTMLCollectionOf<Element>) => {
   });
 };
 
+/**
+ *
+ * @param input search tags inputs
+ * @returns Flickr API URL depending on whether tags are specified or not
+ */
 const getUrl = (input: string): string => {
   if (input === "") {
-    return "https://www.flickr.com/services/feeds/photos_public.gne";
+    console.log("sending url:,", FLICKR_CONFIG.FLICKR_URL);
+    return FLICKR_CONFIG.FLICKR_URL;
   } else {
     const encodedInput = encodeURIComponent(input);
-    console.log("THE encoding:", encodedInput);
-    return `https://www.flickr.com/services/feeds/photos_public.gne?tags=${encodedInput}`;
+    return `${FLICKR_CONFIG.FLICKR_URL}?tags=${encodedInput}`;
   }
 };

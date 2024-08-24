@@ -17,10 +17,10 @@ export const SearchBar: FC = () => {
   ) => {
     event.preventDefault();
     if (dataState.text.length >= 1) {
-      dataState.triggerSearch(true); // Trigger the search by updating the global state
+      dataState.triggerSearch(true); // Trigger search by updating the global state
       setSearchHelp("");
     } else {
-      setSearchHelp("Search text is empty, no search triggered.");
+      setSearchHelp("Search text is empty. Please enter at 1 one search term.");
     }
   };
 
@@ -59,7 +59,7 @@ export const SearchBar: FC = () => {
           Search
         </button>
       </div>
-      <p>{searchHelp}</p>
+      <p className=" text-red-500">{searchHelp}</p>
     </div>
   );
 };
