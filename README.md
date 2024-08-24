@@ -8,10 +8,11 @@ App URL: https://image-feed.vercel.app/
 
 ## Technologies Used
 
+- [Flickr]() Public Images APIs
 - [NextJS](https://nextjs.org/) Web Framwork
 - [Zustand](https://github.com/pmndrs/zustand) Global state management
 - [zod](https://zod.dev/?id=from-npm-nodebun) Schema validation
-- [Flickr]() Public Images APIs
+- [ts-jest](https://kulshekhar.github.io/ts-jest/docs/) Testing
 - [Typescript](https://www.typescriptlang.org/) Programming language
 
 ## Getting Started
