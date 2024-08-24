@@ -33,8 +33,10 @@ export const ImageGrid: FC = () => {
   }, []);
 
   useEffect(() => {
-    getFeedData();
-  }, [getFeedData]);
+    if (dataState.search.text === "") {
+      getFeedData();
+    }
+  }, [getFeedData, dataState]);
 
   useEffect(() => {
     if (dataState.search.executeSearch && dataState.search.text.length >= 1) {
@@ -47,6 +49,10 @@ export const ImageGrid: FC = () => {
     <>
       {loading || !feed ? (
         <Loading />
+      ) : feed.length === 0 ? (
+        <div className="flex justify-center items-center h-screen">
+          <p className=" text-lg text-slate-800">{`No results found for "${dataState.search.text}"`}</p>
+        </div>
       ) : (
         <GripWrapper>
           {feed.map((image: ParsedEntry, index) => (
