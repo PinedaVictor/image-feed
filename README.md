@@ -2,7 +2,7 @@
 
 Image Feed app will make an API call to Flickrs public feed API. Image feed will allow you to view and search public images hosted by Flickr.
 
-App URL: Enter URL here
+App URL: https://image-feed.vercel.app/
 
 - Mobile friendly UI/UX
 
