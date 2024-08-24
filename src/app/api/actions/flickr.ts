@@ -59,7 +59,6 @@ const parseEntries = (entries: HTMLCollectionOf<Element>) => {
  */
 const getUrl = (input: string): string => {
   if (input === "") {
-    console.log("sending url:,", FLICKR_CONFIG.FLICKR_URL);
     return FLICKR_CONFIG.FLICKR_URL;
   } else {
     const encodedInput = encodeURIComponent(input);
